@@ -12,7 +12,6 @@ namespace DataAccess.Models
         public Projects()
         {
             DetailProjects = new HashSet<DetailProjects>();
-            NewsEvent = new HashSet<NewsEvent>();
         }
 
         public int ProjectId { get; set; }
@@ -33,6 +32,5 @@ namespace DataAccess.Models
         public virtual ProjectTypes ProjectType { get; set; }
         public virtual RealEstateTypes Retype { get; set; }
         public virtual ICollection<DetailProjects> DetailProjects { get; set; }
-        public virtual ICollection<NewsEvent> NewsEvent { get; set; }
     }
 }

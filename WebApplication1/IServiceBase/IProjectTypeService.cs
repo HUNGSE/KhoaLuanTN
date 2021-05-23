@@ -2,10 +2,11 @@
 using System;
 using System.Collections.Generic;
 using System.Text;
-
+using IServiceBase;
 namespace IServices
 {
-    public interface IProjectTypeService : IServiceBase.IBaseService<ProjectTypes>
+    public interface IProjectTypeService : IBaseService<ProjectTypes>
     {
+        IEnumerable<Projects> GetProjectByIDProjectType(int id);
     }
 }

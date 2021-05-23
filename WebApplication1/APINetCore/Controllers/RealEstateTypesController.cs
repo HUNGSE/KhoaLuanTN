@@ -10,7 +10,7 @@ using DataModule;
 namespace APINetCore.Controllers
 {
     [Route("api/realEstateTypes")]
-    [ApiController]
+    [ApiController] 
     public class RealEstateTypesController : ControllerBase
     {
         private readonly IRealEstateTypeService _services;
@@ -53,6 +53,25 @@ namespace APINetCore.Controllers
             _services.SaveChange();
 
             return Ok();
+        }
+        [HttpGet("getbyid/{id}")]
+        public IActionResult GetProjectByIDProjectType(int id)
+        {
+
+            try
+            {
+                var projectsFromRepo = _services.GetProjectByRetypeID(id);
+                if (projectsFromRepo == null)
+                    return BadRequest("Not a value project ");
+                var listMap = _mapper.Map<IEnumerable<ProjectsModel>>(projectsFromRepo);
+                return Ok(listMap);
+            }
+            catch
+            {
+                throw;
+            }
+
+
         }
 
     }

@@ -6,15 +6,18 @@ using DataAccess.Models;
 using IRepositoryBase;
 using IServiceBase;
 using IServices;
+using System.Linq;
 
 namespace Services
 {
     public class ServiceProjectTypes : IProjectTypeService
     {
         private readonly IBaseRepository<ProjectTypes> _repositoryBase;
-        public ServiceProjectTypes(IBaseRepository<ProjectTypes> projectTypes)
+        private readonly IBaseRepository<Projects> _project;
+        public ServiceProjectTypes(IBaseRepository<ProjectTypes> projectTypes, IBaseRepository<Projects> projects)
         {
             _repositoryBase = projectTypes;
+            _project = projects;
         }
         public void Add(ProjectTypes entity)
         {
@@ -40,16 +43,23 @@ namespace Services
         {
             return _repositoryBase.GetByWhere(expression);
         }
-
-
+        
         public void Update(ProjectTypes entity)
         {
             _repositoryBase.Update(entity);
         }
 
+        IEnumerable<Projects> IProjectTypeService.GetProjectByIDProjectType(int id)
+        {
+            var listProjectByProjectTypeID = _project.GetByWhere(x=>x.ProjectTypeId == id);
+            return listProjectByProjectTypeID;
+        }
+
+
         public int SaveChange()
         {
             return _repositoryBase.Savechange();
         }
+
     }
 }

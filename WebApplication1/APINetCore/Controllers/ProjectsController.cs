@@ -54,5 +54,24 @@ namespace APINetCore.Controllers
 
             return Ok();
         }
+        [HttpGet("getbyid/{id}")]
+        public IActionResult GetDetailProjectByProjectID(int id)
+        {
+
+            try
+            {
+                var projectDetailsFromRepo = _services.GetDetailProjectByIDProject(id);
+                if (projectDetailsFromRepo == null)
+                    return BadRequest("Not a value projectDetail ");
+                var listMap = _mapper.Map<IEnumerable<DetailProjectsModel>>(projectDetailsFromRepo);
+                return Ok(listMap);
+            }
+            catch
+            {
+                throw;
+            }
+
+
+        }
     }
 }

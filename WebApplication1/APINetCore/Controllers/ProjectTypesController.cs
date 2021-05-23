@@ -1,11 +1,9 @@
-﻿using Microsoft.AspNetCore.Mvc;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-using IServices;
-using AutoMapper;
+﻿using AutoMapper;
 using DataModule;
+using IServices;
+using Microsoft.AspNetCore.Mvc;
+using Services;
+using System.Collections.Generic;
 
 namespace APINetCore.Controllers
 {
@@ -13,13 +11,14 @@ namespace APINetCore.Controllers
     [ApiController]
     public class ProjectTypesController : ControllerBase
     {
-        private readonly  IProjectTypeService _services;
+        private readonly IProjectTypeService _services;
         private readonly IMapper _mapper;
         public ProjectTypesController(IProjectTypeService service, IMapper mapper)
         {
             _services = service;
             _mapper = mapper;
         }
+        //get All
         [HttpGet]
         public IActionResult GetAll()
         {
@@ -27,6 +26,7 @@ namespace APINetCore.Controllers
             var listMap = _mapper.Map<IEnumerable<ProjectTypesModel>>(list);
             return Ok(listMap);
         }
+        
         [HttpGet("{id}")]
         public IActionResult GetByID(int id)
         {
@@ -53,6 +53,26 @@ namespace APINetCore.Controllers
             _services.SaveChange();
 
             return Ok();
+        }
+        //get list Project by Id  ProjectTypes
+        [HttpGet("getbyid/{id}")]
+        public IActionResult GetProjectByIDProjectType(int id)
+        {
+           
+            try
+            {
+                var projectTypesFromRepo = _services.GetProjectByIDProjectType(id);
+                if (projectTypesFromRepo == null)
+                    return BadRequest("Not a value project ");
+                var listMap = _mapper.Map<IEnumerable<ProjectsModel>>(projectTypesFromRepo);
+                return Ok(listMap);
+            }
+            catch
+            {
+                 throw;
+            }
+   
+           
         }
     }
 }

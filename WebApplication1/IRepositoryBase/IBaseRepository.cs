@@ -14,6 +14,7 @@ namespace IRepositoryBase
         void Delete(T entity);
         int Savechange();
         IEnumerable<T> GetByWhere(Expression<Func<T, bool>> expression);
+
     }
 }
                                 

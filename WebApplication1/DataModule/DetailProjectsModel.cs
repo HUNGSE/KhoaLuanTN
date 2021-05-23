@@ -13,6 +13,16 @@ namespace DataModule
         public DateTime DayStart { get; set; }
         public DateTime DayEnd { get; set; }
         public bool Closed { get; set; }
+        public string Orientation { get; set; }
+        public double Acreage { get; set; }
+        public double Layoutapartment { get; set; }
+        public int Floors { get; set; }
+        public int AmountOfBedroom { get; set; }
+        public int AmountOfToilet { get; set; }
+        public int ParkingLot { get; set; }
+        public string TitleNews { get; set; }
+        public string Describe { get; set; }
+        public string Content { get; set; }
         public string DetailProjectType { get; set; }
         public string AttachFile { get; set; }
         public string CreateBy { get; set; }

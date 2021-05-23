@@ -12,9 +12,12 @@ namespace Services
     public class ServiceRealEstateTypes : IRealEstateTypeService
     {
         private readonly IBaseRepository<RealEstateTypes> _repositoryBase;
-        public ServiceRealEstateTypes(IBaseRepository<RealEstateTypes> realEstateTypes)
+        private readonly IBaseRepository<Projects> _projects;
+
+        public ServiceRealEstateTypes(IBaseRepository<RealEstateTypes> realEstateTypes, IBaseRepository<Projects> projects)
         {
             _repositoryBase = realEstateTypes;
+            _projects = projects;
         }
         public void Add(RealEstateTypes entity)
         {
@@ -35,7 +38,11 @@ namespace Services
         {
             return _repositoryBase.GetByID(id);
         }
-
+        public IEnumerable<Projects> GetProjectByRetypeID(int id)
+        {
+            var listProject = _projects.GetByWhere(x => x.RetypeId == id);
+            return listProject;
+        }
         public IEnumerable<RealEstateTypes> GetByWhere(Expression<Func<RealEstateTypes, bool>> expression)
         {
             return _repositoryBase.GetByWhere(expression);
@@ -49,6 +56,6 @@ namespace Services
             return _repositoryBase.Savechange();
         }
 
-        
+       
     }
 }

@@ -12,11 +12,8 @@ namespace APINetCore.AutomapperProfile
     {
         public ProfileAutoMapper()
         {
-            CreateMap<Citys, CityModel>().ReverseMap();
-            CreateMap<Communes, CommunesModel>().ReverseMap();
+
             CreateMap<DetailProjects, DetailProjectsModel>().ReverseMap();
-            CreateMap<Districts, DistrictsModel>().ReverseMap();
-            CreateMap<NewsEvent, NewsEventModel>().ReverseMap();
             CreateMap<Projects, ProjectsModel>().ReverseMap();
             CreateMap<ProjectTypes, ProjectTypesModel>().ReverseMap();
             CreateMap<RealEstateTypes, RealEstateTypesModel>().ReverseMap();

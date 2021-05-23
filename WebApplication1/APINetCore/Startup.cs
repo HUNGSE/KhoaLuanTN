@@ -3,6 +3,7 @@ using AutoMapper;
 using DataAccess.Models;
 using IRepositoryBase;
 using IServiceBase;
+using IServices;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.HttpsPolicy;
@@ -30,10 +31,12 @@ namespace APINetCore
         }
 
         public IConfiguration Configuration { get; }
+        readonly string MyAllowSpecificOrigins = "_myAllowSpecificOrigins";
 
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
+            services.AddCors();
             services.AddDbContext<RealEstateManagermentContext>(
                options =>
                        options.UseSqlServer(
@@ -46,11 +49,14 @@ namespace APINetCore
 
             IMapper mapper = mappingConfig.CreateMapper();
             services.AddSingleton(mapper);
-
             services.AddTransient(typeof(IBaseRepository<>), typeof(BaseRepository<>));
-
-            services.AddTransient<ICityServices, ServiceCitys>();
-
+            services.AddTransient<IAddressService, ServiceAddress>();
+            services.AddTransient<IDetailProjectService, ServiceDetailProjects>();
+            services.AddTransient<IProjectServices, ServiceProjects>();
+            services.AddTransient<IProjectTypeService, ServiceProjectTypes>();
+            services.AddTransient<IRealEstateTypeService, ServiceRealEstateTypes>();
+            services.AddTransient<IUserService, ServiceUsers>();
+            
             services.AddControllers();
 
         }
@@ -66,6 +72,11 @@ namespace APINetCore
             app.UseHttpsRedirection();
 
             app.UseRouting();
+            app.UseCors(x => x
+                 .AllowAnyMethod()
+                 .AllowAnyHeader()
+                 .SetIsOriginAllowed(origin => true) // allow any origin
+                 .AllowCredentials()); // allow credentials
 
             app.UseAuthorization();
 
